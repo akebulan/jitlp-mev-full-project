@@ -1,0 +1,21 @@
+{
+  "name": "jitlp-mev-bot",
+  "version": "1.0.0",
+  "description": "JIT LP MEV bot using Aave + Uniswap on Base with Flashbots",
+  "main": "scripts/watchMempool.js",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.js --network base",
+    "watch": "node scripts/watchMempool.js"
+  },
+  "dependencies": {
+    "@flashbots/ethers-provider-bundle": "^0.1.2",
+    "dotenv": "^16.3.1",
+    "ethers": "^5.7.2"
+  },
+  "devDependencies": {
+    "hardhat": "^2.17.0",
+    "@nomiclabs/hardhat-ethers": "^2.0.6"
+  }
+}
+
