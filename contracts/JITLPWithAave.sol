@@ -1,58 +1,50 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+
 import { IPool } from "@aave/core-v3/contracts/interfaces/IPool.sol";
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ISwapRouter } from "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
-import { INonfungiblePositionManager, INonfungiblePositionManagerStructs } from "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
+import { INonfungiblePositionManager } from "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
 
-interface IWETH is IERC20 {
-    function deposit() external payable;
-    function withdraw(uint256) external;
-}
+contract JITLPWithAave is Ownable, IERC721Receiver {
+    address public immutable weth;
+    address public immutable usdc;
+    address public immutable aavePool;
+    address public immutable swapRouter;
+    address public immutable positionManager;
 
-contract JITLPWithAave {
-    address public owner;
-    address public aavePool;
-    address public weth;
-    address public usdc;
-    address public uniswapRouter;
-    address public positionManager;
-
-    uint24 public constant FEE_TIER = 500;
-    int24 public constant TICK_LOWER = -60;
-    int24 public constant TICK_UPPER = 60;
+    uint24 public constant poolFee = 500;
+    int24 public constant tickLower = -60;
+    int24 public constant tickUpper = 60;
 
     uint256 public tokenId;
 
     constructor(
-        address _aavePool,
         address _weth,
         address _usdc,
-        address _uniswapRouter,
+        address _aavePool,
+        address _swapRouter,
         address _positionManager
     ) {
-        owner = msg.sender;
-        aavePool = _aavePool;
         weth = _weth;
         usdc = _usdc;
-        uniswapRouter = _uniswapRouter;
+        aavePool = _aavePool;
+        swapRouter = _swapRouter;
         positionManager = _positionManager;
 
+        IERC20(weth).approve(swapRouter, type(uint256).max);
+        IERC20(usdc).approve(swapRouter, type(uint256).max);
         IERC20(weth).approve(positionManager, type(uint256).max);
         IERC20(usdc).approve(positionManager, type(uint256).max);
-        IERC20(weth).approve(uniswapRouter, type(uint256).max);
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Not owner");
-        _;
     }
 
     function initiateFlashLoan(uint256 amount) external onlyOwner {
-        address[] memory assets = new address[](1);
-        uint256[] memory amounts = new uint256[](1);
-        uint256[] memory modes = new uint256[](1);
+        address[] memory assets;
+        uint256[] memory amounts;
+        uint256[] memory modes;
 
         assets[0] = weth;
         amounts[0] = amount;
@@ -73,20 +65,21 @@ contract JITLPWithAave {
         address[] calldata assets,
         uint256[] calldata amounts,
         uint256[] calldata premiums,
-        address,
+        address initiator,
         bytes calldata
     ) external returns (bool) {
-        require(msg.sender == aavePool, "Unauthorized caller");
+        require(msg.sender == aavePool, "Not Aave pool");
+        require(initiator == address(this), "Not initiated by this contract");
 
         uint256 flashAmount = amounts[0];
-        uint256 loanFee = premiums[0];
-
         uint256 half = flashAmount / 2;
+        assets;
 
+        // Swap half WETH → USDC
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
             tokenIn: weth,
             tokenOut: usdc,
-            fee: FEE_TIER,
+            fee: poolFee,
             recipient: address(this),
             deadline: block.timestamp,
             amountIn: half,
@@ -94,15 +87,16 @@ contract JITLPWithAave {
             sqrtPriceLimitX96: 0
         });
 
-        uint256 usdcOut = ISwapRouter(uniswapRouter).exactInputSingle(params);
+        uint256 usdcOut = ISwapRouter(swapRouter).exactInputSingle(params);
 
+        // Add liquidity to Uniswap v3
         (tokenId,,,) = INonfungiblePositionManager(positionManager).mint(
-            INonfungiblePositionManagerStructs.MintParams({
+            INonfungiblePositionManager.MintParams({
                 token0: weth,
                 token1: usdc,
-                fee: FEE_TIER,
-                tickLower: TICK_LOWER,
-                tickUpper: TICK_UPPER,
+                fee: poolFee,
+                tickLower: tickLower,
+                tickUpper: tickUpper,
                 amount0Desired: half,
                 amount1Desired: usdcOut,
                 amount0Min: 0,
@@ -112,10 +106,11 @@ contract JITLPWithAave {
             })
         );
 
+        // Immediately pull liquidity (JIT strategy)
         INonfungiblePositionManager(positionManager).decreaseLiquidity(
-            INonfungiblePositionManagerStructs.DecreaseLiquidityParams({
+            INonfungiblePositionManager.DecreaseLiquidityParams({
                 tokenId: tokenId,
-                liquidity: 1e6,
+                liquidity: 1e6, // placeholder for actual liquidity
                 amount0Min: 0,
                 amount1Min: 0,
                 deadline: block.timestamp
@@ -123,7 +118,7 @@ contract JITLPWithAave {
         );
 
         INonfungiblePositionManager(positionManager).collect(
-            INonfungiblePositionManagerStructs.CollectParams({
+            INonfungiblePositionManager.CollectParams({
                 tokenId: tokenId,
                 recipient: address(this),
                 amount0Max: type(uint128).max,
@@ -131,10 +126,20 @@ contract JITLPWithAave {
             })
         );
 
-        uint256 totalOwed = flashAmount + loanFee;
+        // Repay Aave
+        uint256 totalOwed = amounts[0] + premiums[0];
         IERC20(weth).approve(aavePool, totalOwed);
 
         return true;
+    }
+
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes calldata
+    ) external pure override returns (bytes4) {
+        return this.onERC721Received.selector;
     }
 
     receive() external payable {}

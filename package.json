@@ -1,21 +1,35 @@
 {
   "name": "jitlp-mev-bot",
   "version": "1.0.0",
-  "description": "JIT LP MEV bot using Aave + Uniswap on Base with Flashbots",
-  "main": "scripts/watchMempool.js",
+  "description": "JIT LP MEV strategy using AAVE flash loans",
   "scripts": {
-    "compile": "npx hardhat compile",
-    "deploy": "npx hardhat run scripts/deploy.js --network base",
-    "watch": "node scripts/watchMempool.js"
+    "compile": "hardhat compile",
+    "test": "hardhat test"
   },
   "dependencies": {
-    "@flashbots/ethers-provider-bundle": "^0.1.2",
-    "dotenv": "^16.3.1",
-    "ethers": "^5.7.2"
+    "@aave/core-v3": "^1.17.0",
+    "@openzeppelin/contracts": "^4.3.2",
+    "@uniswap/v3-core": "^1.0.0",
+    "@uniswap/v3-periphery": "^1.4.4",
+    "dotenv": "^16.5.0",
+    "ethers": "^6.14.3"
   },
   "devDependencies": {
-    "hardhat": "^2.17.0",
-    "@nomiclabs/hardhat-ethers": "^2.0.6"
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "@typechain/ethers-v6": "^0.4.3",
+    "@typechain/hardhat": "^8.0.3",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "chai": "^4.5.0",
+    "hardhat": "^2.20.2",
+    "hardhat-gas-reporter": "^1.0.10",
+    "solidity-coverage": "^0.8.16",
+    "ts-node": "^10.9.2",
+    "typechain": "^8.3.2",
+    "typescript": "^5.8.3"
   }
 }
-

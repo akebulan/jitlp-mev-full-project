@@ -1,0 +1,978 @@
+{
+  "compiler": {
+    "version": "0.8.10+commit.fc410830"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "contract IPoolAddressesProvider",
+            "name": "provider",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "previousAdminRole",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "newAdminRole",
+            "type": "bytes32"
+          }
+        ],
+        "name": "RoleAdminChanged",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "RoleGranted",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "sender",
+            "type": "address"
+          }
+        ],
+        "name": "RoleRevoked",
+        "type": "event"
+      },
+      {
+        "inputs": [],
+        "name": "ADDRESSES_PROVIDER",
+        "outputs": [
+          {
+            "internalType": "contract IPoolAddressesProvider",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "ASSET_LISTING_ADMIN_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "BRIDGE_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "DEFAULT_ADMIN_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "EMERGENCY_ADMIN_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "FLASH_BORROWER_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "POOL_ADMIN_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "RISK_ADMIN_ROLE",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "addAssetListingAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "bridge",
+            "type": "address"
+          }
+        ],
+        "name": "addBridge",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "addEmergencyAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "borrower",
+            "type": "address"
+          }
+        ],
+        "name": "addFlashBorrower",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "addPoolAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "addRiskAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          }
+        ],
+        "name": "getRoleAdmin",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "grantRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "hasRole",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "isAssetListingAdmin",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "bridge",
+            "type": "address"
+          }
+        ],
+        "name": "isBridge",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "isEmergencyAdmin",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "borrower",
+            "type": "address"
+          }
+        ],
+        "name": "isFlashBorrower",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "isPoolAdmin",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "isRiskAdmin",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "removeAssetListingAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "bridge",
+            "type": "address"
+          }
+        ],
+        "name": "removeBridge",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "removeEmergencyAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "borrower",
+            "type": "address"
+          }
+        ],
+        "name": "removeFlashBorrower",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "removePoolAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "admin",
+            "type": "address"
+          }
+        ],
+        "name": "removeRiskAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "renounceRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "revokeRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "role",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "adminRole",
+            "type": "bytes32"
+          }
+        ],
+        "name": "setRoleAdmin",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes4",
+            "name": "interfaceId",
+            "type": "bytes4"
+          }
+        ],
+        "name": "supportsInterface",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "author": "Aave",
+      "kind": "dev",
+      "methods": {
+        "addAssetListingAdmin(address)": {
+          "params": {
+            "admin": "The address of the new admin"
+          }
+        },
+        "addBridge(address)": {
+          "params": {
+            "bridge": "The address of the new Bridge"
+          }
+        },
+        "addEmergencyAdmin(address)": {
+          "params": {
+            "admin": "The address of the new admin"
+          }
+        },
+        "addFlashBorrower(address)": {
+          "params": {
+            "borrower": "The address of the new FlashBorrower"
+          }
+        },
+        "addPoolAdmin(address)": {
+          "params": {
+            "admin": "The address of the new admin"
+          }
+        },
+        "addRiskAdmin(address)": {
+          "params": {
+            "admin": "The address of the new admin"
+          }
+        },
+        "constructor": {
+          "details": "ConstructorThe ACL admin should be initialized at the addressesProvider beforehand",
+          "params": {
+            "provider": "The address of the PoolAddressesProvider"
+          }
+        },
+        "getRoleAdmin(bytes32)": {
+          "details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+        },
+        "grantRole(bytes32,address)": {
+          "details": "Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role."
+        },
+        "hasRole(bytes32,address)": {
+          "details": "Returns `true` if `account` has been granted `role`."
+        },
+        "isAssetListingAdmin(address)": {
+          "params": {
+            "admin": "The address to check"
+          },
+          "returns": {
+            "_0": "True if the given address is AssetListingAdmin, false otherwise"
+          }
+        },
+        "isBridge(address)": {
+          "params": {
+            "bridge": "The address to check"
+          },
+          "returns": {
+            "_0": "True if the given address is Bridge, false otherwise"
+          }
+        },
+        "isEmergencyAdmin(address)": {
+          "params": {
+            "admin": "The address to check"
+          },
+          "returns": {
+            "_0": "True if the given address is EmergencyAdmin, false otherwise"
+          }
+        },
+        "isFlashBorrower(address)": {
+          "params": {
+            "borrower": "The address to check"
+          },
+          "returns": {
+            "_0": "True if the given address is FlashBorrower, false otherwise"
+          }
+        },
+        "isPoolAdmin(address)": {
+          "params": {
+            "admin": "The address to check"
+          },
+          "returns": {
+            "_0": "True if the given address is PoolAdmin, false otherwise"
+          }
+        },
+        "isRiskAdmin(address)": {
+          "params": {
+            "admin": "The address to check"
+          },
+          "returns": {
+            "_0": "True if the given address is RiskAdmin, false otherwise"
+          }
+        },
+        "removeAssetListingAdmin(address)": {
+          "params": {
+            "admin": "The address of the admin to remove"
+          }
+        },
+        "removeBridge(address)": {
+          "params": {
+            "bridge": "The address of the bridge to remove"
+          }
+        },
+        "removeEmergencyAdmin(address)": {
+          "params": {
+            "admin": "The address of the admin to remove"
+          }
+        },
+        "removeFlashBorrower(address)": {
+          "params": {
+            "borrower": "The address of the FlashBorrower to remove"
+          }
+        },
+        "removePoolAdmin(address)": {
+          "params": {
+            "admin": "The address of the admin to remove"
+          }
+        },
+        "removeRiskAdmin(address)": {
+          "params": {
+            "admin": "The address of the admin to remove"
+          }
+        },
+        "renounceRole(bytes32,address)": {
+          "details": "Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`."
+        },
+        "revokeRole(bytes32,address)": {
+          "details": "Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role."
+        },
+        "setRoleAdmin(bytes32,bytes32)": {
+          "details": "By default the admin role for all roles is `DEFAULT_ADMIN_ROLE`.",
+          "params": {
+            "adminRole": "The admin role",
+            "role": "The role to be managed by the admin role"
+          }
+        },
+        "supportsInterface(bytes4)": {
+          "details": "See {IERC165-supportsInterface}."
+        }
+      },
+      "stateVariables": {
+        "ADDRESSES_PROVIDER": {
+          "return": "The address of the PoolAddressesProvider",
+          "returns": {
+            "_0": "The address of the PoolAddressesProvider"
+          }
+        },
+        "ASSET_LISTING_ADMIN_ROLE": {
+          "return": "The id of the AssetListingAdmin role",
+          "returns": {
+            "_0": "The id of the AssetListingAdmin role"
+          }
+        },
+        "BRIDGE_ROLE": {
+          "return": "The id of the Bridge role",
+          "returns": {
+            "_0": "The id of the Bridge role"
+          }
+        },
+        "EMERGENCY_ADMIN_ROLE": {
+          "return": "The id of the EmergencyAdmin role",
+          "returns": {
+            "_0": "The id of the EmergencyAdmin role"
+          }
+        },
+        "FLASH_BORROWER_ROLE": {
+          "return": "The id of the FlashBorrower role",
+          "returns": {
+            "_0": "The id of the FlashBorrower role"
+          }
+        },
+        "POOL_ADMIN_ROLE": {
+          "return": "The id of the PoolAdmin role",
+          "returns": {
+            "_0": "The id of the PoolAdmin role"
+          }
+        },
+        "RISK_ADMIN_ROLE": {
+          "return": "The id of the RiskAdmin role",
+          "returns": {
+            "_0": "The id of the RiskAdmin role"
+          }
+        }
+      },
+      "title": "ACLManager",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "ADDRESSES_PROVIDER()": {
+          "notice": "Returns the contract address of the PoolAddressesProvider"
+        },
+        "ASSET_LISTING_ADMIN_ROLE()": {
+          "notice": "Returns the identifier of the AssetListingAdmin role"
+        },
+        "BRIDGE_ROLE()": {
+          "notice": "Returns the identifier of the Bridge role"
+        },
+        "EMERGENCY_ADMIN_ROLE()": {
+          "notice": "Returns the identifier of the EmergencyAdmin role"
+        },
+        "FLASH_BORROWER_ROLE()": {
+          "notice": "Returns the identifier of the FlashBorrower role"
+        },
+        "POOL_ADMIN_ROLE()": {
+          "notice": "Returns the identifier of the PoolAdmin role"
+        },
+        "RISK_ADMIN_ROLE()": {
+          "notice": "Returns the identifier of the RiskAdmin role"
+        },
+        "addAssetListingAdmin(address)": {
+          "notice": "Adds a new admin as AssetListingAdmin"
+        },
+        "addBridge(address)": {
+          "notice": "Adds a new address as Bridge"
+        },
+        "addEmergencyAdmin(address)": {
+          "notice": "Adds a new admin as EmergencyAdmin"
+        },
+        "addFlashBorrower(address)": {
+          "notice": "Adds a new address as FlashBorrower"
+        },
+        "addPoolAdmin(address)": {
+          "notice": "Adds a new admin as PoolAdmin"
+        },
+        "addRiskAdmin(address)": {
+          "notice": "Adds a new admin as RiskAdmin"
+        },
+        "isAssetListingAdmin(address)": {
+          "notice": "Returns true if the address is AssetListingAdmin, false otherwise"
+        },
+        "isBridge(address)": {
+          "notice": "Returns true if the address is Bridge, false otherwise"
+        },
+        "isEmergencyAdmin(address)": {
+          "notice": "Returns true if the address is EmergencyAdmin, false otherwise"
+        },
+        "isFlashBorrower(address)": {
+          "notice": "Returns true if the address is FlashBorrower, false otherwise"
+        },
+        "isPoolAdmin(address)": {
+          "notice": "Returns true if the address is PoolAdmin, false otherwise"
+        },
+        "isRiskAdmin(address)": {
+          "notice": "Returns true if the address is RiskAdmin, false otherwise"
+        },
+        "removeAssetListingAdmin(address)": {
+          "notice": "Removes an admin as AssetListingAdmin"
+        },
+        "removeBridge(address)": {
+          "notice": "Removes an address as Bridge"
+        },
+        "removeEmergencyAdmin(address)": {
+          "notice": "Removes an admin as EmergencyAdmin"
+        },
+        "removeFlashBorrower(address)": {
+          "notice": "Removes an admin as FlashBorrower"
+        },
+        "removePoolAdmin(address)": {
+          "notice": "Removes an admin as PoolAdmin"
+        },
+        "removeRiskAdmin(address)": {
+          "notice": "Removes an admin as RiskAdmin"
+        },
+        "setRoleAdmin(bytes32,bytes32)": {
+          "notice": "Set the role as admin of a specific role."
+        }
+      },
+      "notice": "Access Control List Manager. Main registry of system roles and permissions.",
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "protocol/configuration/ACLManager.sol": "ACLManager"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "remappings": []
+  },
+  "sources": {
+    "dependencies/openzeppelin/contracts/AccessControl.sol": {
+      "keccak256": "0x8ffe2d2e2a0d1463edd92df84635f77fe1bcbd7d6dd5bbd0dde905012d148496",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://b60a56d8b423c807af0e373c8ac66c92e02f313668a96b3db24852fc49e6dd8a",
+        "dweb:/ipfs/QmbNaT6ppjnbd7RriHcbiEztJW9XJyCwUJPQaQ7cYo6Pkf"
+      ]
+    },
+    "dependencies/openzeppelin/contracts/Context.sol": {
+      "keccak256": "0x0d984665e4f3dd200c605a83b7caae057dd96136c038fcdd271fd85757dc3d8f",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://75b72c586f82e3eedbb030ef92494582d7f0d80557c007cebf9a8ec98429d6ec",
+        "dweb:/ipfs/QmV4Ltyjuj7B3RVNzjkJbhH3EihmWNb7oikxNj7xwWes4z"
+      ]
+    },
+    "dependencies/openzeppelin/contracts/ERC165.sol": {
+      "keccak256": "0x1435b73fe6c05aeb0fa6920a3371d66624cd9a902245667d0c9b56dc58593701",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://83c963c065533235fd5ca9ca9f798e0ef7833a250434cca66aa15354e4ccc6fc",
+        "dweb:/ipfs/QmVqXUPYs2YXvJKMqUPF3SPmvNR4oLjZQs51R6DKAd7nRT"
+      ]
+    },
+    "dependencies/openzeppelin/contracts/IAccessControl.sol": {
+      "keccak256": "0xc6cca24399ca1ff613e094888b477e4e1ed185c6919487d2055aa4bf1a12bf06",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://4be1813e8f79635c52fb534653af3fa2cd0c2c1098fd763c31190fb54151e38f",
+        "dweb:/ipfs/QmPupP53oCn5WJ6shJXPPUxUcvFjoLSHSBwCA44M8sBYcL"
+      ]
+    },
+    "dependencies/openzeppelin/contracts/IERC165.sol": {
+      "keccak256": "0x60e893f1cca24287602b64adbc78ece2d128ff72478ac0ba93c408a294946d3f",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://a3482b72ac3ab0bb7313a2e27bdb5bc313f76359ee46eadba8c839af31804b9d",
+        "dweb:/ipfs/Qmev5HsVJSFRkdbEhr31TQYHMs5L2ut3U4YwB6WZ9fGQUs"
+      ]
+    },
+    "dependencies/openzeppelin/contracts/Strings.sol": {
+      "keccak256": "0x20ce1cdd59673bf83a1c6ee8861dd4a29c6609271e9a5be62790b7a1e6e0730c",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://68a180e6f8b883d0f423fe4756d745e0ac326a557f37952d5e82ef7568e02464",
+        "dweb:/ipfs/Qmes6bP1fx1Z9yzzC8bSxBvZ6UBJUnCpoRwt58JiFbF2x3"
+      ]
+    },
+    "interfaces/IACLManager.sol": {
+      "keccak256": "0x23954d1f417d3f711e4e215f6b497343d2d1545c22c5c997e3587089b5791275",
+      "license": "AGPL-3.0",
+      "urls": [
+        "bzz-raw://5f00bf0f1f5173f17a92c94658ca8589f5e706333124fbec2bc325b0b1a6702a",
+        "dweb:/ipfs/QmfJEzEDdUd6Hv4ZyFJXVyX8YnJXUC7AAgD9zsj7QK75hv"
+      ]
+    },
+    "interfaces/IPoolAddressesProvider.sol": {
+      "keccak256": "0x73185cd3b952eb691bbf2344b3f7a35cf8b67b33c39275e52e12b80436ea1d5c",
+      "license": "AGPL-3.0",
+      "urls": [
+        "bzz-raw://ed19048938ec0806b0a227a49bf58e04456974fae4d649ce1f189c394d73898e",
+        "dweb:/ipfs/QmSAVn8e6zX2aYWhDibLZxgZFDz3Y5CvTKYBXgutRtBYTP"
+      ]
+    },
+    "protocol/configuration/ACLManager.sol": {
+      "keccak256": "0x67fb5e6dda0defae1b65f025ebc2f464897081c5df77dd6cda54ed3f8ad03dc8",
+      "license": "BUSL-1.1",
+      "urls": [
+        "bzz-raw://64ee4cea59e774a07ecfc508d3488b65c6991e48d3fc7a5746641695ab85ee8f",
+        "dweb:/ipfs/QmYJddWFd1GNLsC5aL7HWoeNwj7JwvC85fbftoqXK2XjKZ"
+      ]
+    },
+    "protocol/libraries/helpers/Errors.sol": {
+      "keccak256": "0x3378cb9e8c58e121f10e9d2022c50984331621217281e11f1bb3dc79b3d77706",
+      "license": "BUSL-1.1",
+      "urls": [
+        "bzz-raw://be13b21a3b31d48758933b14c52cac4336140cc3db6224a715fe17bf519d4bdd",
+        "dweb:/ipfs/QmNQjHKjN86anjTVpyKmJG1bbnwQ3okKQaDGUZk3UoJpeT"
+      ]
+    }
+  },
+  "version": 1
+}
