@@ -1,0 +1,9 @@
+close
+quit()
+quit
+exit
+exit()
+getAddress("0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913")
+getAddress("0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+getAddress("0xA0b86991C6218B36C1D19D4a2e9Eb0CE3606EB48")
+const { getAddress } = require("ethers");

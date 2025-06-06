@@ -1,0 +1,7 @@
+import { AlchemyConfig } from '../api/alchemy-config';
+import { GetNftCollectionsByWalletResponse, GetNftsByWalletResponse, GetTokenBalancesByWalletResponse, GetTokensByWalletResponse, GetTransactionsByWalletResponse, PortfolioAddress } from '../types/portfolio-types';
+export declare function getTokensByWallet(config: AlchemyConfig, addresses: PortfolioAddress[], withMetadata?: boolean, withPrices?: boolean, includeNativeTokens?: boolean, srcMethod?: string): Promise<GetTokensByWalletResponse>;
+export declare function getTokenBalancesByWallet(config: AlchemyConfig, addresses: PortfolioAddress[], includeNativeTokens?: boolean, srcMethod?: string): Promise<GetTokenBalancesByWalletResponse>;
+export declare function getNftsByWallet(config: AlchemyConfig, addresses: PortfolioAddress[], withMetadata?: boolean, pageKey?: string | undefined, pageSize?: number | undefined, srcMethod?: string): Promise<GetNftsByWalletResponse>;
+export declare function getNftCollectionsByWallet(config: AlchemyConfig, addresses: PortfolioAddress[], withMetadata?: boolean, pageKey?: string | undefined, pageSize?: number | undefined, srcMethod?: string): Promise<GetNftCollectionsByWalletResponse>;
+export declare function getTransactionsByWallet(config: AlchemyConfig, addresses: PortfolioAddress[], before?: string | undefined, after?: string | undefined, limit?: number | undefined, srcMethod?: string): Promise<GetTransactionsByWalletResponse>;

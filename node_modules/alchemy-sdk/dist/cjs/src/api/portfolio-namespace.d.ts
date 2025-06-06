@@ -1,0 +1,80 @@
+import { PortfolioAddress } from '../types/portfolio-types';
+/**
+ * The Portfolio namespace contains methods for getting data needed to build a portfolio.
+ *
+ * Do not call this constructor directly. Instead, instantiate an Alchemy object
+ * with `const alchemy = new Alchemy(config)` and then access the portfolio namespace
+ * via `alchemy.portfolio`.
+ */
+export declare class PortfolioNamespace {
+    private readonly config;
+    /**
+     * Fetches fungible tokens (native and ERC-20) for multiple wallet addresses
+     * and networks.
+     *
+     * @param addresses - Array of network/address pairs
+     *                    (limit 2 pairs, max 5 networks each).
+     * @param withMetadata - Boolean. If set to true, returns metadata. Setting
+     *                                this to false will reduce payload size and
+     *                                may result in a faster API call.
+     *                                (default: true)
+     * @param withPrices - Boolean. If set to true, returns token prices. Setting
+     *                              this to false will reduce payload size and may
+     *                              result in a faster API call. (default: true)
+     * @param includeNativeTokens - Boolean. Whether to include each chain’s
+     *                                       native token in the response
+     *                                       (e.g. ETH on Ethereum). The native
+     *                                       token will have a null contract
+     *                                       address. (default: true)
+     *
+     * @returns Promise containing a list of tokens with balances, prices, and
+     *          metadata for each wallet/network combination.
+     *
+     * @public
+     */
+    getTokensByWallet(addresses: PortfolioAddress[], withMetadata?: boolean, withPrices?: boolean, includeNativeTokens?: boolean): Promise<import("../types/portfolio-types").GetTokensByWalletResponse>;
+    /**
+     * Fetches fungible tokens (native and ERC-20) for multiple wallet addresses and networks.
+     *
+     * @param addresses - Array of network/address pairs (limit 2 pairs, max 5 networks each).
+     * @param includeNativeTokens - Boolean. Whether to include each chain’s native token in the response (e.g. ETH on Ethereum). The native token will have a null contract address. (default: true)   * @returns Promise containing a list of tokens with balances for each wallet/network combination
+     * @public
+     */
+    getTokenBalancesByWallet(addresses: PortfolioAddress[], includeNativeTokens?: boolean): Promise<import("../types/portfolio-types").GetTokenBalancesByWalletResponse>;
+    /**
+     * Fetches NFTs for multiple wallet addresses and networks.
+     *
+     * @param addresses - Array of network/address pairs to fetch NFTs for.
+     * @param withMetadata - Boolean. If set to true, returns metadata. Setting this to false will reduce payload size and may result in a faster API call. (default: true)
+     * @param pageKey - Optional. The cursor that points to the current set of results.
+     * @param pageSize - Optional. Sets the number of items per page.
+     * @returns Promise containing a list of NFTs and metadata for each wallet/network combination.
+     *
+     * @public
+     */
+    getNftsByWallet(addresses: PortfolioAddress[], withMetadata?: boolean, pageKey?: string, pageSize?: number): Promise<import("../types/portfolio-types").GetNftsByWalletResponse>;
+    /**
+     * Fetches NFT collections (contracts) for multiple wallet addresses and networks. Returns a list of
+     * collections and metadata for each wallet/network combination.
+     *
+     * @param addresses - Array of address and networks pairs (limit 2 pairs, max 15 networks each).
+     * @param withMetadata - Boolean. If set to true, returns metadata. (default: true)
+     * @param pageKey - Optional. The cursor that points to the current set of results.
+     * @param pageSize - Optional. Sets the number of items per page.
+     * @returns Promise containing a list of NFT collections for each wallet/network combination.
+     * @public
+     */
+    getNftCollectionsByWallet(addresses: PortfolioAddress[], withMetadata?: boolean, pageKey?: string, pageSize?: number): Promise<import("../types/portfolio-types").GetNftCollectionsByWalletResponse>;
+    /**
+     * Fetches all historical transactions (internal & external) for multiple wallet addresses and networks.
+     *
+     * @param addresses - Array of network/address pairs to fetch transactions for.
+     * @param before - Optional. The cursor that points to the previous set of results.
+     * @param after - Optional. The cursor that points to the end of the current set of results.
+     * @param limit - Optional. Sets the maximum number of items per page (Max: 100)
+     * @returns Promise containing a list of transaction objects with metadata and log information.
+     *
+     * @public
+     */
+    getTransactionsByWallet(addresses: PortfolioAddress[], before?: string, after?: string, limit?: number): Promise<import("../types/portfolio-types").GetTransactionsByWalletResponse>;
+}
