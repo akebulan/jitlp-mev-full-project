@@ -3,7 +3,15 @@ import datetime
 import json
 import websockets
 from web3 import Web3
-from eth_abi import decode_abi
+from eth_abi.codec import ABICodec
+from eth_abi.registry import registry
+
+# Create an ABICodec instance for decoding
+codec = ABICodec(registry)
+
+# Define a decode_abi function
+def decode_abi(types, data):
+    return codec.decode(types, data)
 
 QUICKNODE_WS = 'wss://tiniest-thrumming-research.matic.quiknode.pro/9309689ad8cd10f8f068c0d227ed6bb1b0289e7e/'
 ROUTERS = {
