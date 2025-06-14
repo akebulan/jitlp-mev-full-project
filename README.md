@@ -1,118 +1,89 @@
-# JIT LP MEV Strategy on Base
+# JITLP MEV Project
 
-## Overview
-This strategy uses an Aave flash loan to provide Just-In-Time liquidity to the WETH/USDC 0.5% pool on Uniswap v3 on the Base network. It watches for large swaps, bundles a liquidity provision, collects the fees, and repays Aave — all in one transaction.
+This project contains smart contracts and scripts for MEV opportunities on Base blockchain, focusing on Aave liquidations and Just-In-Time Liquidity Provision.
 
-## Structure
+## Components
 
-- `contracts/`: Solidity smart contract `JITLPWithAave.sol`
-- `scripts/`: JS scripts for mempool monitoring, profit checks, and Flashbots bundling
-- `.env.example`: Config example
-- `hardhat.config.js`: Hardhat setup for deploying and testing
+### Smart Contracts
+
+- **AaveV3Liquidator**: Flash loan liquidator for Aave V3 positions
+- **JITLPWithAave**: Just-In-Time Liquidity Provider using Aave
+
+### Scripts
+
+- **monitor_aave_liquidations_1.py**: Monitors Aave positions and executes liquidations
+- **aave_collateral_finder.py**: Finds collateral assets for users by querying Aave contracts
+- **bloxroute_liquidator.py**: Executes liquidations through bloXroute for MEV protection
 
 ## Setup
 
-1. Copy `.env.example` to `.env` and fill in your values
-2. Install dependencies:
-   ```
-   npm install
-   ```
-3. Compile contract:
-   ```
-   npx hardhat compile
-   ```
-4. Deploy to Base:
-   ```
-   npx hardhat run scripts/deploy.js --network base
-   ```
-5. Start mempool watcher:
-   ```
-   node scripts/watchMempool.js
-   ```
+1. Install dependencies:
+```bash
+# Smart contracts
+npm install
 
-## Flashbots Bundling
-Triggered automatically via `autoTriggerBundle.js` if expected fees > cost.
+# Python scripts
+pip install web3 requests python-dotenv
+```
 
----
+2. Set up environment variables in `.env`:
+```
+# RPC URLs
+BASE_RPC=https://rpc.ankr.com/base/YOUR_API_KEY
 
-## 🔧 Build & Run Instructions
+# Contract addresses
+LIQUIDATOR_ADDRESS=YOUR_DEPLOYED_CONTRACT_ADDRESS
 
-### 1. Install Dependencies
+# Private key (NEVER commit this to git)
+PRIVATE_KEY=YOUR_PRIVATE_KEY
+
+# bloXroute configuration (optional)
+BLOXROUTE_BASE_URL=https://api.blxrbdn.com
+BLOXROUTE_AUTH_HEADER=YOUR_BLOXROUTE_AUTH_TOKEN
+```
+
+3. Deploy the contracts:
+```bash
+npx hardhat run scripts/deploy-aave-liquidator.js --network base
+```
+
+## Usage
+
+### Monitoring Aave Liquidations
+
+Basic monitoring:
+```bash
+python scripts/python/monitor_aave_liquidations_1.py
+```
+
+Test mode (simulates liquidations for users with HF < 1.05):
+```bash
+python scripts/python/monitor_aave_liquidations_1.py --test
+```
+
+With bloXroute for MEV protection:
+```bash
+python scripts/python/monitor_aave_liquidations_1.py --bloxroute
+```
+
+Additional options:
+```bash
+python scripts/python/monitor_aave_liquidations_1.py --test --max-liquidations 3 --interval 30
+```
+
+### Finding User Collateral
 
 ```bash
-npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox dotenv
-npm install ethers @flashbots/ethers-provider-bundle
+python scripts/python/aave_collateral_finder.py 0xUSER_ADDRESS
 ```
 
----
+## Security Notes
 
-### 2. Configure `.env`
+- Never commit your `.env` file with private keys
+- Use a dedicated wallet with minimal funds for testing
+- Rotate keys regularly
+- Consider using a hardware wallet for production
 
-Copy `.env.example` to `.env` and fill in:
+## License
 
-```
-BASE_RPC_URL=https://base-mainnet.g.alchemy.com/v2/YOUR_API_KEY
-PRIVATE_KEY=your_wallet_private_key
-JIT_CONTRACT=your_deployed_contract_address
-AAVE_POOL=0x...
-WETH=0x...
-USDC=0x...
-UNISWAP_ROUTER=0x...
-POSITION_MANAGER=0x...
-```
-
----
-
-### 3. Compile Contract
-
-```bash
-npx hardhat compile
-```
-
----
-
-### 4. Deploy to Base Network
-
-Add a deploy script `scripts/deploy.js`:
-
-```js
-const hre = require("hardhat");
-
-async function main() {
-  const Contract = await hre.ethers.getContractFactory("JITLPWithAave");
-  const contract = await Contract.deploy(
-    process.env.AAVE_POOL,
-    process.env.WETH,
-    process.env.USDC,
-    process.env.UNISWAP_ROUTER,
-    process.env.POSITION_MANAGER
-  );
-  await contract.deployed();
-  console.log("✅ Deployed to:", contract.address);
-}
-
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
-```
-
-Then run:
-```bash
-npx hardhat run scripts/deploy.js --network base
-```
-
----
-
-### 5. Start Monitoring Strategy
-
-```bash
-node scripts/watchMempool.js
-```
-
-This will listen for Uniswap swaps and bundle a flash loan + LP transaction if profitable.
-
----
-
-### ✅ Done
-You're now live with a real MEV-aware LP bot on Base Mainnet.
+MIT
